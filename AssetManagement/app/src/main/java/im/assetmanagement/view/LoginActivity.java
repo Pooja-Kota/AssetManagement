@@ -23,7 +23,9 @@ import org.json.JSONObject;
 import im.assetmanagement.R;
 import im.assetmanagement.data.Constants.ApplicationConstants;
 import im.assetmanagement.data.Utils.ApiResponse;
-import im.assetmanagement.data.Utils.User;
+import im.assetmanagement.data.Utils.AssetDTO;
+import im.assetmanagement.data.Utils.UserDTO;
+import im.assetmanagement.data.Utils.WifiDTO;
 import im.assetmanagement.network_interface.NetworkController;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -51,7 +53,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         loginButton.setOnClickListener(this);
     }
 
-    public void loginRequest(User user) {
+    public void loginRequest(UserDTO user) {
         showProgressDialog();
         String userJson = new Gson().toJson(user);
         Log.d(TAG, "loginRequest() - " + userJson);
@@ -63,9 +65,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         @Override
                         public void onResponse(JSONObject response) {
                             dismissProgressDialog();
+                            Log.d(TAG, response.toString());
                             ApiResponse apiResponse = new Gson().fromJson(response.toString(), ApiResponse.class);
                             if (apiResponse.getCode().equals("200")) {
+                                Log.d(TAG, apiResponse.getResult().toString());
+                                AssetDTO assetDTO = null;
+                                try {
+                                    assetDTO = new Gson().fromJson(response.get("result").toString(), AssetDTO.class);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
+                                dashboard.putExtra("assetId", assetDTO.getAssetId());
+                                dashboard.putExtra("username", userName.getText().toString());
                                 LoginActivity.this.startActivity(dashboard);
                             } else {
 
@@ -112,7 +124,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             LoginActivity.this.startActivity(signUp);
         } else if (v.getId() == R.id.loginForgotPasswordLink) {
         } else if (v.getId() == R.id.loginButton) {
-            User user = new User();
+            UserDTO user = new UserDTO();
             user.setUsername(userName.getText().toString());
             user.setPin(password.getText().toString());
             user.setMACId(getMacAddress(this));

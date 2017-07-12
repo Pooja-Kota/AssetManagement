@@ -10,13 +10,22 @@ import android.view.View;
 import im.assetmanagement.R;
 
 public class DashboardActivity extends BaseActivity {
+
     BottomNavigationView bottomNavigationView;
+    String assetId;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         initBottomNavigationView();
+        Bundle extras = getIntent().getExtras();
+        assetId = extras.getString("assetId");
+        username = extras.getString("username");
+        WifiFragment wifiFragment = new WifiFragment();
+        wifiFragment.setArguments(setUserDetails());
+        fragmentTransaction(wifiFragment.getClass().getSimpleName(), wifiFragment, true);
     }
 
     private void initBottomNavigationView() {
@@ -58,8 +67,8 @@ public class DashboardActivity extends BaseActivity {
 
     private Bundle setUserDetails() {
         Bundle bundle = new Bundle();
-        bundle.putString("username", "");
-        bundle.putString("assetId", "");
+        bundle.putString("username", username);
+        bundle.putString("assetId", assetId);
         return bundle;
     }
 

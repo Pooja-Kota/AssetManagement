@@ -3,13 +3,11 @@ package im.assetmanagement.view;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,7 +22,7 @@ import org.json.JSONObject;
 import im.assetmanagement.R;
 import im.assetmanagement.data.Constants.ApplicationConstants;
 import im.assetmanagement.data.Utils.ApiResponse;
-import im.assetmanagement.data.Utils.User;
+import im.assetmanagement.data.Utils.UserDTO;
 import im.assetmanagement.network_interface.NetworkController;
 
 public class SignUpActivity extends BaseActivity implements View.OnClickListener {
@@ -50,7 +48,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         signUpButton.setOnClickListener(this);
     }
 
-    public void signUpRequest(User user) {
+    public void signUpRequest(UserDTO user) {
         showProgressDialog();
         String userJson = new Gson().toJson(user);
         Log.d(TAG, "loginRequest() - " + userJson);
@@ -107,7 +105,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.loginButton) {
-            User user = new User();
+            UserDTO user = new UserDTO();
             user.setUsername(userName.getText().toString());
             user.setPin(pin.getText().toString());
             user.setFirstName(firstName.getText().toString());
