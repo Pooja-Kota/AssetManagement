@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
+    <item
+        android:id="@+id/home_tab"
+        android:enabled="true"
+        android:icon="@android:drawable/btn_radio"
+        android:title="Wifi"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/tab_2"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Location"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/tab_3"
+        android:enabled="true"
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:title="Applications"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/tab_4"
+        android:enabled="true"
+        android:icon="@android:drawable/sym_contact_card"
+        android:title="Sim Details"
+        app:showAsAction="ifRoom"></item>
+
+
+</menu>
